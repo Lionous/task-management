@@ -14,6 +14,6 @@ namespace application.Models
         public DateTime create_at { get; set; }
         
         public Guid category_id { get; set; }
-        public Category? Category { get; set; }
+        public Category Category { get; set; } = null!;
     }
 }

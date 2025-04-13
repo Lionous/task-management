@@ -1,4 +1,5 @@
 using application.DTOs.Objects.Category;
+using application.DTOs.Objects.Homework;
 using application.Models;
 using AutoMapper;
 
@@ -18,6 +19,9 @@ namespace application.DataAccess
 
                     cfg.CreateMap<Category, CategoryDto>().MaxDepth(2);
                     cfg.CreateMap<CategoryDto, Category>().MaxDepth(2);
+                    
+                    cfg.CreateMap<Homework, HomeworkDto>().MaxDepth(2);
+                    cfg.CreateMap<HomeworkDto, Homework>().MaxDepth(2);
                 });
                 
                 Mapper = configuration.CreateMapper();

@@ -42,7 +42,7 @@ namespace application.DataAccess
                 entity.Property(e => e.status).HasConversion<string>();
                 entity.Property(e => e.create_at).HasColumnName("create_at");
                 entity.HasOne(e => e.Category)
-                    .WithMany()
+                    .WithMany(e => e.ListTask)
                     .HasForeignKey(e => e.category_id);
             });
             

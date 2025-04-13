@@ -10,6 +10,7 @@ AppSettings.Init();
 
 #region Dependency injection
 builder.Services.AddScoped<IRepoCategory, QCategory>();
+builder.Services.AddScoped<IRepoHomework, QHomework>();
 #endregion
 
 builder.Services.AddControllers();
