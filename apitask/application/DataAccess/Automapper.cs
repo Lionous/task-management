@@ -1,0 +1,28 @@
+using application.DTOs.Objects.Category;
+using application.Models;
+using AutoMapper;
+
+namespace application.DataAccess
+{
+    public abstract class Automapper
+    {
+        private static bool _initMapper = true;
+        public static IMapper? Mapper;
+        
+        public static void Start()
+        {
+            if (_initMapper)
+            {
+                MapperConfiguration configuration = new MapperConfiguration(cfg =>
+                {
+
+                    cfg.CreateMap<Category, CategoryDto>().MaxDepth(2);
+                    cfg.CreateMap<CategoryDto, Category>().MaxDepth(2);
+                });
+                
+                Mapper = configuration.CreateMapper();
+                _initMapper = false;
+            }
+        } 
+    }
+}
