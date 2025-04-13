@@ -2,9 +2,9 @@ namespace application.DTOs.Enums
 {
     public enum StatusEnum
     {
-        Pending,
-        Processing,
-        Completed,
-        Cancelled,
+        Processing = 1,
+        Completed = 2,
+        Cancelled = 3,
+        Pending = 4,
     }
 }

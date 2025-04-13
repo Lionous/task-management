@@ -19,8 +19,15 @@ namespace application.Repositories.Queries
 
         public HomeworkDto GetById(Guid id)
         {
-            Homework? homework = _context.Homeworks.AsNoTracking().FirstOrDefault(u => u.id == id);
-            return Automapper.Mapper!.Map<HomeworkDto>(homework);
+            throw new NotImplementedException();
+        }
+
+        public HomeworkWithCategory GetIdWithCategory(Guid id)
+        {
+            Homework? homework = _context.Homeworks
+                .Include(c => c.Category)
+                .FirstOrDefault(u => u.id == id);
+            return Automapper.Mapper!.Map<HomeworkWithCategory>(homework);
         }
 
         public int Update(HomeworkDto dto)
@@ -42,5 +49,15 @@ namespace application.Repositories.Queries
         {
             return Automapper.Mapper!.Map<List<HomeworkDto>>(_context.Homeworks.ToList());
         }
+        
+        public List<HomeworkWithCategory> GetWithCategories()
+        {
+            return Automapper.Mapper!.Map<List<HomeworkWithCategory>>(
+                _context.Homeworks
+                    .Include(c => c.Category)
+                    .ToList()
+            );
+        }
+
     }
 }
