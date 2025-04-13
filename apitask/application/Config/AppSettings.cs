@@ -19,7 +19,7 @@ namespace application.Config
             _dtoAppSettings.ConnetionStringSQLite = configuration["ConnectionStrings:ConnectionStringSQLite"];
         }
 
-        public static string GetConnetionStringSqLite()
+        public static string? GetConnetionStringSqLite()
         {
             return _dtoAppSettings!.ConnetionStringSQLite;
         }
