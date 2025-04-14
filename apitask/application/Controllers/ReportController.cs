@@ -1,5 +1,6 @@
 using application.DTOs.Enums;
 using application.DTOs.Objects.Homework;
+using application.DTOs.Others;
 using application.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,14 @@ namespace application.Controllers
         {
             List<HomeworkWithCategory> listHomework = repoReport.GetByFilters(categoryId, date, status);
             return Ok(listHomework);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult<object> Statistics()
+        {
+            HomeworkStatistics stats = repoReport.GetStatistics();
+            return Ok(stats);
         }
     }
 }
