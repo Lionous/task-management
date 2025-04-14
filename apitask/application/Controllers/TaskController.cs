@@ -1,3 +1,4 @@
+using application.DTOs.Objects.Category;
 using application.DTOs.Objects.Homework;
 using application.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace application.Controllers
                 description = homework.description,
                 status = homework.status,
                 category_id = homework.category_id,
-                create_at = DateTime.UtcNow,
+                create_at = DateTime.UtcNow
             };
             int result = repoHomework.Create(newHomework);
 
@@ -29,9 +30,9 @@ namespace application.Controllers
         
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult<HomeworkDto> GetById(Guid id)
+        public ActionResult<HomeworkWithCategory> GetById(Guid id)
         {
-            HomeworkDto homework = repoHomework.GetById(id);
+            HomeworkWithCategory homework = repoHomework.GetIdWithCategory(id);
             return homework;
         }
         
@@ -54,7 +55,6 @@ namespace application.Controllers
                 description = homework.description,
                 status = homework.status,
                 category_id = homework.category_id,
-                create_at = DateTime.UtcNow
             };
 
             int result = repoHomework.Update(newHomework);
@@ -72,6 +72,14 @@ namespace application.Controllers
                 return Ok("Eliminado con exito.");
 
             return NotFound("No se pudo eliminar");
+        }
+        
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult<List<HomeworkWithCategory>> GetWithCategories()
+        {
+            List<HomeworkWithCategory> listHomework = repoHomework.GetWithCategories();
+            return Ok(listHomework);
         }
     }
 }

@@ -22,6 +22,8 @@ namespace application.DataAccess
                     
                     cfg.CreateMap<Homework, HomeworkDto>().MaxDepth(2);
                     cfg.CreateMap<HomeworkDto, Homework>().MaxDepth(2);
+                    cfg.CreateMap<Homework, HomeworkWithCategory>()
+                        .ForMember(dest => dest.category, opt => opt.MapFrom(src => src.Category));
                 });
                 
                 Mapper = configuration.CreateMapper();
