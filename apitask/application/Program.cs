@@ -1,41 +1,59 @@
-var builder = WebApplication.CreateBuilder(args);
+using application.Config;
+using application.Repositories.Interfaces;
+using application.Repositories.Queries;
+using Microsoft.OpenApi.Models;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+#region appsettings
+AppSettings.Init();
+#endregion
+
+#region Dependency injection
+builder.Services.AddScoped<IRepoCategory, QCategory>();
+builder.Services.AddScoped<IRepoHomework, QHomework>();
+builder.Services.AddScoped<IRepoReport, QReport>();
+#endregion
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddOpenApi();
+#region Swagger UI
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "API Gestión de Tareas.",
+        Description = "Esta API realiza un crud básico de la gestion de tareas.",
+        TermsOfService = new Uri("https://github.com/Lionous/task-management"),
+        Contact = new OpenApiContact
+        {
+            Name = "Collaborators",
+            Url = new Uri("https://github.com/Lionous"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Licencse",
+            Url = new Uri("https://github.com/Lionous/task-management#")
+        }
+    });
+});
+#endregion
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    //app.MapOpenApi();
+    app.UseSwagger(options => { options.SerializeAsV2 = true; });
+    app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+app.UseCors("AllowOnlyDefaults");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
