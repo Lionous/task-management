@@ -1,6 +1,7 @@
 using application.Config;
 using application.Repositories.Interfaces;
 using application.Repositories.Queries;
+using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,28 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
+#region authentication to Swagger UI
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "API Gestión de Tareas.",
+        Description = "Esta API realiza un crud básico de la gestion de tareas.",
+        TermsOfService = new Uri("https://github.com/Lionous/task-management"),
+        Contact = new OpenApiContact
+        {
+            Name = "Collaborators",
+            Url = new Uri("https://github.com/Lionous"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Licencse",
+            Url = new Uri("https://github.com/Lionous/task-management#")
+        }
+    });
+});
+#endregion
 
 WebApplication app = builder.Build();
 
@@ -26,8 +48,8 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     //app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(options => { options.SerializeAsV2 = true; });
+    app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 }
 
 app.UseHttpsRedirection();
