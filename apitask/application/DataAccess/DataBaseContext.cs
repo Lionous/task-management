@@ -40,7 +40,9 @@ namespace application.DataAccess
                 entity.HasKey(e => e.id);
                 entity.Property(e => e.id).HasConversion( v => v.ToString().ToLower(), v => Guid.Parse(v));
                 entity.Property(e => e.status).HasConversion<string>();
-                entity.Property(e => e.create_at).HasColumnName("create_at");
+                entity.Property(e => e.create_at).HasColumnName("create_at").HasConversion(
+                    v => v.ToString("yyyy-MM-dd HH:mm:ss"),
+                    v => DateTime.Parse(v));
                 entity.HasOne(e => e.Category)
                     .WithMany(e => e.ListTask)
                     .HasForeignKey(e => e.category_id);

@@ -20,7 +20,7 @@ namespace application.Controllers
                 description = homework.description,
                 status = homework.status,
                 category_id = homework.category_id,
-                create_at = DateTime.UtcNow,
+                create_at = DateTime.UtcNow
             };
             int result = repoHomework.Create(newHomework);
 
@@ -78,7 +78,7 @@ namespace application.Controllers
         [Route("[action]")]
         public ActionResult<List<HomeworkWithCategory>> GetWithCategories()
         {
-            var listHomework = repoHomework.GetWithCategories();
+            List<HomeworkWithCategory> listHomework = repoHomework.GetWithCategories();
             return Ok(listHomework);
         }
     }
