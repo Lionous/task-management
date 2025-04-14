@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddOpenApi();
-#region authentication to Swagger UI
+#region Swagger UI
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo

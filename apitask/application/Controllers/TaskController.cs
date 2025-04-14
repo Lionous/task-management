@@ -1,4 +1,4 @@
-using application.DTOs.Objects.Category;
+using application.DTOs.Enums;
 using application.DTOs.Objects.Homework;
 using application.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace application.Controllers
                 id = Guid.NewGuid(),
                 title = homework.title,
                 description = homework.description,
-                status = homework.status,
+                status = homework.status ?? StatusEnum.Pending,
                 category_id = homework.category_id,
                 create_at = DateTime.UtcNow
             };
