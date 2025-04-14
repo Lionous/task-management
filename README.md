@@ -5,6 +5,7 @@ Este repositorio contiene el código para una API RESTful desarrollada con ASP.N
 ## Tabla de contenidos
 + Base de datos 
 	- [Scritp de la base de datos](#base-de-datos-sqlite)
+    - [Conexion de la base de datos](#conexion-de-la-base-de-datos)
 
 + Instalación y Ejecución Tradicional de la API
 	- [Software Requerido](#software-requerido)
@@ -23,6 +24,16 @@ La base de datos que se está usando es SQLite, dirigirse al proyecto y en la ca
 cd resources
 ```
 El script se puede encontrar en...👉 [Script](resources/script.sql)
+
+## Conexion de la base de datos
+En la ruta que se encuentra acontinuación se encuentra un archivo `.json`
+```bash
+cd apitask/application/appsettings.Development.json
+```
+Abrir el archivo y cambiar la linea "ConnectionStringSQLite", y poner la ruta donde esta la base de datos SQLite.
+
+La base de datos se encontra en...👉 [Base de datos](resources/data.sqlite3)
+> Nota: Si desea crear otra base de datos puede ejecutar el script que se menciona en lo anterior.
 
 ## Instalación y Ejecución Tradicional de la API
 
